@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 data class Product(
     val name: String,
@@ -55,12 +56,12 @@ fun ProductCard(pro: Product) {
             Column(Modifier.padding(8.dp)) {
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 22.sp,
                     color = Color.Yellow,
                 )
                 Text(
                     text = description,
-                    style = MaterialTheme.typography.displaySmall,
+                    fontSize = 16.sp,
                 )
             }
         }

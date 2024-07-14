@@ -27,6 +27,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -41,7 +45,10 @@ import com.ITW.ezbuy.R
 import com.ITW.ezbuy.ui.theme.EzBuyTheme
 
 @Composable
-fun ProfilePage(name: String?, mail: String?, navController: NavHostController) {
+fun ProfilePage(navController: NavHostController) {
+    var name by remember{ mutableStateOf("Ruxtz") }
+    var mail by remember{ mutableStateOf("ruxtz@gmail.com") }
+
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -58,8 +65,8 @@ fun ProfilePage(name: String?, mail: String?, navController: NavHostController) 
                 )
                 Spacer(modifier = Modifier.width(14.dp))
                 Column {
-                    Text(text = "$name", modifier = Modifier.padding(4.dp), fontSize = 20.sp)
-                    Text(text = "$mail")
+                    Text(text = name, modifier = Modifier.padding(4.dp), fontSize = 20.sp)
+                    Text(text = mail)
                 }
             }
 
@@ -92,39 +99,46 @@ fun ProfilePage(name: String?, mail: String?, navController: NavHostController) 
             Text(text = "Already have 12 orders.")
             Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "right")
         }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(text = "My Order")
+            Text(text = "Already have 12 orders.")
+            Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "right")
+        }
 //        }
 
     Spacer(modifier = Modifier.height(300.dp))
 
         BottomAppBar(
-            containerColor = colorResource(id = R.color.Col2),
+            containerColor = colorResource(id = R.color.Col2)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colorResource(id = R.color.Col2)),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .background(colorResource(id = R.color.Col2)),
+                horizontalArrangement = Arrangement.SpaceAround) {
                 IconButton(
-                    onClick = { /* Handle navigation icon click */ }
+                    onClick = { navController.navigate("MainScreen") }
                 ) {
                     Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
                 }
 
                 IconButton(
-                    onClick = { /* Handle navigation icon click */ }
+                    onClick = { navController.navigate("BagPage") }
                 ) {
                     Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Search")
                 }
 
                 IconButton(
-                    onClick = { /* Handle navigation icon click */ }
+                    onClick = { navController.navigate("WishPage") }
                 ) {
                     Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
                 }
 
                 IconButton(
-                    onClick = { /* Handle navigation icon click */ }
+                    onClick = { navController.navigate("ProfilePage") }
                 ) {
                     Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Profile")
                 }
@@ -139,7 +153,7 @@ fun ProfilePage(name: String?, mail: String?, navController: NavHostController) 
 fun GreetingPreview() {
     val dummyNavController = rememberNavController()
     EzBuyTheme {
-        ProfilePage(name = "Dibyajyoti Raj Mohaptra", mail = "Ruxtz 2004", navController = dummyNavController)
+        ProfilePage(navController = dummyNavController)
     }
 }
 

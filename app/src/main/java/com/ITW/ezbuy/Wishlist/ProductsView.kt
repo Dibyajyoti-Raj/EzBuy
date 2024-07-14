@@ -1,30 +1,23 @@
-package com.ITW.ezbuy.Bag
+package com.ITW.ezbuy.Wishlist
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -32,49 +25,53 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.ITW.ezbuy.MainActivity
 import com.ITW.ezbuy.R
 import com.ITW.ezbuy.ui.theme.EzBuyTheme
 
 @Composable
-fun BagPage(navController: NavController){
-    var code by  remember { mutableStateOf("Enter your promo code    ") }
-    var total by  remember { mutableStateOf(178.2) }
+fun WishPage(navController: NavController) {
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         Text(
-            text = "My Bag",
+            text = "Favorites",
             textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth(),
             color = Color.Black,
-            fontSize = 42.sp
+            fontSize = 32.sp
         )
 
         Spacer(modifier = Modifier.height(26.dp))
 
-        AllProducts()
-        
-        Spacer(modifier = Modifier.height(12.dp))
-        TextField(value = code, onValueChange = {code = it}, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "Total Amount :  $total$", modifier = Modifier.fillMaxWidth().padding(8.dp), fontSize = 26.sp)
+//        productScreen(productVM = productVM)
+//        val product by productVM.products.observeAsState(emptyList<Product>())
+//        LazyColumn {
+//        items(product) { product ->
+//            ProductItem(product = product)
+//        }
+    }
 
-        Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth().padding(12.dp)) {
-            Text(text = "CHECK OUT", textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(), color = Color.Black)
-        }
+
+//        Spacer(modifier = Modifier.weight(1f))
 
         BottomAppBar(
             containerColor = colorResource(id = R.color.Col2)
         ) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .background(colorResource(id = R.color.Col2)),
-                horizontalArrangement = Arrangement.SpaceAround) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colorResource(id = R.color.Col2)),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
                 IconButton(
                     onClick = { navController.navigate("MainScreen") }
                 ) {
@@ -100,27 +97,47 @@ fun BagPage(navController: NavController){
                 }
             }
         }
+}
+
+//@Composable
+//fun productScreen(productVM: ProductViewModel) {
+//    val product by productVM.products.observeAsState(emptyList<Product>())
+//
+//    LazyColumn {
+//        items(product) { product ->
+//            ProductItem(product = product)
+//        }
+//    }
+//}
+
+@Composable
+fun ProductItem(product: Product) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            AsyncImage(
+                model = product.image,
+                contentDescription = null,
+                modifier = Modifier
+                    .height(180.dp)
+                    .fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = product.title)
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun WishPagePreview() {
     val dummyNavController = rememberNavController()
     EzBuyTheme {
-        BagPage(navController = dummyNavController)
+        WishPage(navController = dummyNavController)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

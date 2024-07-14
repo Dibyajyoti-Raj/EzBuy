@@ -9,17 +9,17 @@ import com.ITW.ezbuy.R
 fun AllProducts() {
     val pro = listOf(
         Product(
-            name = "Rose",
+            name = "Bag",
             description = "A thorny flowering plant known for its beautiful blooms.",
             imageRes = R.drawable.ic_launcher_foreground
         ),
         Product(
-            name = "Sunflower",
+            name = "Watch",
             description = "A large, yellow flowering plant that follows the sun.",
             imageRes = R.drawable.ic_launcher_foreground
         ),
         Product(
-            name = "Tulip",
+            name = "Sneakers",
             description = "A bulbous spring-flowering plant with boldly colored cup-shaped flowers.",
             imageRes = R.drawable.ic_launcher_foreground // Assuming R.drawable.tulip is a valid drawable resource ID
         )

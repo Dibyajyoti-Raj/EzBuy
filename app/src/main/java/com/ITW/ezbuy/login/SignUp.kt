@@ -42,29 +42,6 @@ import com.ITW.ezbuy.R
 import com.ITW.ezbuy.mainPage.MainPage1
 import com.ITW.ezbuy.ui.theme.EzBuyTheme
 
-@Composable
-fun SignUp() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "Screen1") {
-        composable("Screen1") { SignUpPage(navController) }
-        composable("Screen2") { LogInPage(navController) }
-        composable("Screen3") { ForgetPasswordPage(navController) }
-        composable("MainScreen") { MainPage1(navController) }
-
-        composable(
-            "profile/{name}/{mail}",
-            arguments = listOf(
-                navArgument("name") { type = NavType.StringType },
-                navArgument("mail") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name")
-            val mail = backStackEntry.arguments?.getString("mail")
-            ProfilePage(navController = navController, name = name, mail = mail)
-        }
-    }
-}
-
     @Composable
     fun SignUpPage(navController: NavController) {
         var name by remember { mutableStateOf(" ") }

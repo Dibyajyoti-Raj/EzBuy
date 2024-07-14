@@ -46,29 +46,35 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.ITW.ezbuy.mainPage.MainPage1
 import com.ITW.ezbuy.ui.theme.EzBuyTheme
 
 @Composable
 fun ForgetPasswordPage(navController: NavController){
     var mail by remember { mutableStateOf(" ") }
-
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-
-        IconButton(onClick = { navController.navigate("Screen2") }) {
-            Icon(
+    IconButton(onClick = { navController.navigate("Screen2") }) {
+        Icon(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
             contentDescription = "Back")
-        }
-
-        Box{ Text(text = "Forgot password", fontWeight = FontWeight.Bold,
-            color = Color.Black, textAlign = TextAlign.Left)
-        }
     }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp),
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
+        Box {
+            Text(
+                text = "Forgot password", fontWeight = FontWeight.Bold,
+                color = Color.Black, textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth(),
+                fontSize = 42.sp
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(text = "Please, enter your email address. We will send a link for password update",
             modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         
@@ -76,12 +82,21 @@ fun ForgetPasswordPage(navController: NavController){
             TextField(value = mail,
                 onValueChange = {mail = it},
                 label = { Text("Email") })
-            Text(text = "Not a valid mail address, should be yours mail address",
-                modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+//            Text(text = "Not a valid mail address, should be yours mail address",
+//                modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         }
-        
+        Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { /*TODO*/ }) {
-            
+            Text(text = "SEND", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview2() {
+    val dummyNavController = rememberNavController()
+    EzBuyTheme {
+        ForgetPasswordPage(navController = dummyNavController)
     }
 }

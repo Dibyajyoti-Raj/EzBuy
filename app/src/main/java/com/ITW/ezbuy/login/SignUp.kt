@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -27,17 +26,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.ITW.ezbuy.Profile.ProfilePage
 import com.ITW.ezbuy.R
 import com.ITW.ezbuy.mainPage.MainPage1
 import com.ITW.ezbuy.ui.theme.EzBuyTheme
@@ -50,6 +50,18 @@ fun SignUp() {
         composable("Screen2") { LogInPage(navController) }
         composable("Screen3") { ForgetPasswordPage(navController) }
         composable("MainScreen") { MainPage1(navController) }
+
+        composable(
+            "profile/{name}/{mail}",
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType },
+                navArgument("mail") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name")
+            val mail = backStackEntry.arguments?.getString("mail")
+            ProfilePage(navController = navController, name = name, mail = mail)
+        }
     }
 }
 
@@ -59,11 +71,15 @@ fun SignUp() {
         var mail by remember { mutableStateOf(" ") }
         var passwd by remember { mutableStateOf("Password") }
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
             Box {
                 Text(
                     text = "Sign Up", fontWeight = FontWeight.Bold,
-                    color = Color.Black, textAlign = TextAlign.Left
+                    color = Color.Black, textAlign = TextAlign.Left,
+                    modifier = Modifier.fillMaxWidth(),
+                    fontSize = 62.sp
                 )
             }
 
@@ -93,15 +109,16 @@ fun SignUp() {
             Button(onClick = { navController.navigate("MainScreen") }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "SIGN UP", textAlign = TextAlign.Center)
             }
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(Color.LightGray)
-            ) {
-                Text(text = "or login with a social account.", textAlign = TextAlign.Center)
+//            Box(
+//                modifier = Modifier
+//                    .size(100.dp)
+//                    .background(Color.LightGray)
+//            ) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "or login with a social account.", textAlign = TextAlign.End, modifier = Modifier.fillMaxWidth())
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+//                    horizontalArrangement = Arrangement.Center
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.google),
@@ -112,8 +129,15 @@ fun SignUp() {
                         painter = painterResource(id = R.drawable.win),
                         contentDescription = "Microsoft"
                     )
-                }
             }
         }
     }
 
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview1() {
+    val dummyNavController = rememberNavController()
+    EzBuyTheme {
+        SignUpPage(navController = dummyNavController)
+    }
+}

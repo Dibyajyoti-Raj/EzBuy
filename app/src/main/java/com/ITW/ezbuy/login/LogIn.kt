@@ -46,8 +46,11 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ITW.ezbuy.R
+import com.ITW.ezbuy.mainPage.MainPage1
 import com.ITW.ezbuy.ui.theme.EzBuyTheme
 
 @Composable
@@ -55,26 +58,25 @@ fun LogInPage(navController: NavController){
     var mail by remember { mutableStateOf(" ") }
     var passwd by remember { mutableStateOf("Password") }
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()) {
+    IconButton(onClick = { navController.navigate("Screen1") }) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+            contentDescription = "Back")
+    }
 
-        IconButton(onClick = { navController.navigate("Screen1") }) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                contentDescription = "Back"
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Box {
+            Text(
+                text = "Login", fontWeight = FontWeight.Bold,
+                color = Color.Black, textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth(),
+                fontSize = 62.sp
             )
         }
 
-        Box{ Text(text = "Sign Up", fontWeight = FontWeight.Bold,
-            color = Color.Black, textAlign = TextAlign.Left)
-        }
-    }
-
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()) {
-
+        Spacer(modifier = Modifier.height(16.dp))
         TextField(
             value = mail,
             onValueChange = { mail = it },
@@ -93,14 +95,9 @@ fun LogInPage(navController: NavController){
         Button(onClick = { navController.navigate("MainScreen") }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "LOG IN", textAlign = TextAlign.Center)
         }
-
-        Box(
-            modifier = Modifier
-                .size(100.dp)
-                .background(Color.LightGray)
-        ){
-            Text(text = "or login with a social account.", textAlign = TextAlign.Center)
-            Row(modifier = Modifier.fillMaxWidth(),
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "or login with a social account.", textAlign = TextAlign.End, modifier = Modifier.fillMaxWidth())
+        Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center) {
                 Image(painter = painterResource(id = R.drawable.google), contentDescription = "Google")
                 Spacer(modifier = Modifier.width(16.dp))
@@ -109,4 +106,12 @@ fun LogInPage(navController: NavController){
         }
 
     }
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview3() {
+    val dummyNavController = rememberNavController()
+
+        LogInPage(navController = dummyNavController)
+
 }
